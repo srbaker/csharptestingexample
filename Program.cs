@@ -10,6 +10,10 @@ namespace HelloWorld
             {
                 Console.WriteLine("Hello World!");
             }
+            else if (args[0] == "-g")
+            {
+                Console.WriteLine("Goodbye cruel world.");
+            }
             else
             {
                 Console.WriteLine("Hello, {0}!", args[0]);
