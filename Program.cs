@@ -6,7 +6,14 @@ namespace HelloWorld
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            if (args.Length == 0)
+            {
+                Console.WriteLine("Hello World!");
+            }
+            else
+            {
+                Console.WriteLine("Hello, {0}!", args[0]);
+            }
         }
     }
 }
