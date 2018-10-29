@@ -27,5 +27,16 @@ namespace HelloWorld.Tests
                 Assert.That(stringWriter.ToString(), Is.EqualTo("Goodbye cruel world.\n"));
             }
         }
+
+        [Test]
+        public void HelloName()
+        {
+            using (var stringWriter = new StringWriter())
+            {
+                Console.SetOut(stringWriter);
+                Program.Main(new string[] {"foobar"});
+                Assert.That(stringWriter.ToString(), Is.EqualTo("Hello, foobar!\n"));
+            }
+        }
     }
 }
