@@ -9,33 +9,45 @@ namespace HelloWorld.Tests
         [Test]
         public void HelloWorld()
         {
-            using (var stringWriter = new StringWriter())
-            {
-                Console.SetOut(stringWriter);
-                Program.Main(new string[] {});
-                Assert.That(stringWriter.ToString(), Is.EqualTo("Hello World!\n"));
-            }
+            Assert.That(
+                CapturingStdOut(() => Program.Main(new string[] {})),
+                Is.EqualTo("Hello World!\n"));
         }
 
         [Test]
         public void GoodbyCruelWorld()
         {
-            using (var stringWriter = new StringWriter())
-            {
-                Console.SetOut(stringWriter);
-                Program.Main(new string[] {"-g"});
-                Assert.That(stringWriter.ToString(), Is.EqualTo("Goodbye cruel world.\n"));
-            }
+            Assert.That(
+                CapturingStdOut(() => Program.Main(new string[] {"-g"})),
+                Is.EqualTo("Goodbye cruel world.\n"));
         }
 
         [Test]
         public void HelloName()
         {
+            Assert.That(
+                CapturingStdOut(() => Program.Main(new string[] { "foobar" })),
+                Is.EqualTo("Hello, foobar!\n"));
+        }
+
+        private string CapturingStdOut(Action codeWithOutput)
+        {
+            var originalStdOut = Console.Out;
+
             using (var stringWriter = new StringWriter())
             {
                 Console.SetOut(stringWriter);
-                Program.Main(new string[] {"foobar"});
-                Assert.That(stringWriter.ToString(), Is.EqualTo("Hello, foobar!\n"));
+
+                try
+                {
+                    codeWithOutput();
+                }
+                finally
+                {
+                    Console.SetOut(originalStdOut);
+                }
+
+                return stringWriter.ToString();
             }
         }
     }
