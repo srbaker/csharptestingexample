@@ -1,18 +1,20 @@
-﻿using NUnit.Framework;
+﻿using System;
+using System.IO;
+using NUnit.Framework;
 
-namespace Tests
+namespace HelloWorld.Tests
 {
     public class ProgramTests
     {
-        [SetUp]
-        public void Setup()
-        {
-        }
-
         [Test]
-        public void Test1()
+        public void HelloWorld()
         {
-            Assert.Pass();
+            using (var stringWriter = new StringWriter())
+            {
+                Console.SetOut(stringWriter);
+                Program.Main(new string[] {});
+                Assert.That(stringWriter.ToString(), Is.EqualTo("Hello World!\n"));
+            }
         }
     }
 }
