@@ -16,5 +16,16 @@ namespace HelloWorld.Tests
                 Assert.That(stringWriter.ToString(), Is.EqualTo("Hello World!\n"));
             }
         }
+
+        [Test]
+        public void GoodbyCruelWorld()
+        {
+            using (var stringWriter = new StringWriter())
+            {
+                Console.SetOut(stringWriter);
+                Program.Main(new string[] {"-g"});
+                Assert.That(stringWriter.ToString(), Is.EqualTo("Goodbye cruel world.\n"));
+            }
+        }
     }
 }
